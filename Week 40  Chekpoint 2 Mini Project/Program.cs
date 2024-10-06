@@ -1,126 +1,123 @@
-﻿
-    //Console.WriteLine(isInt);
-    //Console.WriteLine(value);
-    //Array.Resize(ref valueArray, valueArray.Length + 1);
-    ////valueArray[index] = int.Parse(data);
-    //valueArray[index] = Convert.ToInt32(data);
-    //index++;
 
+using DocumentFormat.OpenXml.Wordprocessing;
+using Stripe;
+using Stripe.Issuing;
+using System.Data;
 
-    //}
-
-    //Console.WriteLine("---------------");
-    //Console.WriteLine("Your Numbers");
-    //foreach (int element in valueArray)
-    //{
-    //    Console.WriteLine(element);
-    //}
-
-
-    //Console.WriteLine("---------------");
-    //Console.WriteLine("Your Numbers - Sorted");
-    //Array.Sort(valueArray);
-    //foreach (int element in valueArray)
-    //{
-    //    Console.WriteLine(element);
-    //}
-
-    //Console.ReadLine();
-    //if (string.IsNullOrEmpty(data))
-    //{
-    //    Console.ForegroundColor = ConsoleColor.Red;
-    //    Console.WriteLine("Du får inte ange ett tomt värde ");
-
-    //    {
-    //        Console.ResetColor();
-    //    }
-
-
-
-
-
-
-    List<product> productlist = new List<product>();
-
-    Console.WriteLine("To enter a new product - follw the steps | To quit - enter: ``Q`` ");
-while (true)
-
+class program
 {
-    //string data = Console.ReadLine();
-    Console.Write("Enter a Category: ");
-    string categoryName = Console.ReadLine();
-    if (string.IsNullOrEmpty(categoryName))
+    static void Main(string[] args)
     {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("Category cannot be empty ");
-        Category category = new Category(categoryName);
-
+        
+        List<Product> Products = new List<Product>();
+        string input = "";
+        Console.WriteLine("To enter a new product - follw the steps | To quit - enter: ``Q`` ");
+        while (true)
         {
-            Console.ResetColor();
-        }
-        //if (string
-        //    {
-        //    data == "Q")
-        //    }
 
-        //{
-        //        break;
-        //    }
-
-
-        //string data = Console.ReadLine();
-        Console.Write("Enter Product name: ");
-        string productName = Console.ReadLine();
-        if (string.IsNullOrEmpty(productName))
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("product name cannot be empty ");
-            //Name Name = new Name(Name);
-
+            Console.Write("Enter a Product Name: ");
+            string productname = Console.ReadLine();
+            if (string.IsNullOrEmpty(productname))
             {
-                Console.ResetColor();
-            }
-            //if (data == "Q")
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("product name cannot be empty ");
+                {
+                    Console.ResetColor();
+                }
 
-            //{
-            //    break;
-            //}
+            }
+            Console.Write("Enter a category: ");
+            string categoryname = Console.ReadLine();
+            if (string.IsNullOrEmpty(categoryname))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("category cannot be empty ");
+                Category category = new Category(categoryname);
+
+                {
+                    Console.ResetColor();
+                }
+
+            }
+
+            Console.Write("Enter a Price: ");
+            decimal Price = decimal.Parse(Console.ReadLine());
+
+
+            Products.AddRange(Products);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("The product was succefully added!");
+            Console.ResetColor();
+
+            Console.Write("Type 'q' to quit or any other key to add another produkt: ");
+            input = Console.ReadLine();
+
+
+            Console.WriteLine("-------------------------------------");
+            List<Product> sortedproducts = Products.OrderBy(product => product.Price).ToList();
+            var sortedProducts = Products.OrderBy(p => p.Price);
+         
+            foreach (Product product in sortedproducts)
+            {
+                Console.WriteLine(product.Name.PadRight(10) + product.Category.PadRight(10) + product.Price);
+            }
+            decimal totalPrice = sortedproducts.ToList().Sum(product => product.Price);
+            Console.WriteLine("$\nTotal Price: { totalPrice:c}" );
+
+
+            Console.WriteLine("-------------------------------------");
+            List<Product> filteredproducts = Products.Where(Product => Product.Price > totalPrice).ToList();
+            foreach (Product product in filteredproducts)
+            {
+                Console.WriteLine(product.Name.PadRight(10) + product.Category.PadRight(10) + product.Price);
+            }
+
+            Console.WriteLine("\nDo you want to add more products?(Press any key to continue  or 'q' to quit): ");
+           
+            input = Console.ReadLine();
+            if (input == "q")
+            {
+                break; 
+            }
+
+            else
+            {
+                Main(args);
+            }
+           
+            
+           
+
         }
+
+
     }
+
 }
 
+    class Product
+    {
+        public Product(string name, string category, decimal price)
+        {
+            Name = name;
+            Category = category;
+            Price = price;
+        }
 
-
-
-
-
-
-
+        public string Name { get; set; }
+        public string Category { get; set; }
+        public decimal Price { get; set; }
+    }
 
     class Category
-{
-    public Category(string name)
     {
-        name = name;
-    }
-    public Category name { get; set; }
-}
+        public Category(string name)
+        {
+            Name = name;
+        }
 
-class product
-{
-    public product()
-    {
-    }
-
-    public product(string Name, string Category, int Prise)
-    {
-        Name = Name;
-        Category = Category;
-        Prise = Prise;
+        public string Name { get; set; }
 
     }
 
-    public string Name { get; set; }
-    public string Category { get; set; }
-    public int Prise { get; set; }
 }
